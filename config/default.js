@@ -1,4 +1,4 @@
-const packageJson = require('../package.json') as { name: string, version: string };
+const packageJson = require('../package.json');
 
 module.exports = {
   appName: packageJson.name,
