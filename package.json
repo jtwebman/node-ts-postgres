@@ -1,0 +1,30 @@
+{
+  "name": "node-ts-postgres",
+  "version": "1.0.0",
+  "description": "A simple Node.js Typescript service with Postgres, proper validation, tests, and seperation of concerns",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "npx tsc",
+    "start": "node dist/server.js",
+    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\""
+  },
+  "author": "JT Turner <jtwebman@gmail.com> (https://jtwebman.com/)",
+  "license": "MIT",
+  "devDependencies": {
+    "@tsconfig/node18": "2.0.1",
+    "@types/config": "3.3.0",
+    "@types/express": "4.17.17",
+    "@types/node": "20.3.1",
+    "@types/stoppable": "1.1.1",
+    "concurrently": "8.2.0",
+    "nodemon": "2.0.22",
+    "ts-node": "10.9.1",
+    "typescript": "5.1.3"
+  },
+  "dependencies": {
+    "config": "3.3.9",
+    "express": "4.18.2",
+    "stoppable": "1.1.0",
+    "winston": "3.9.0"
+  }
+}
