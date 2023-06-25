@@ -1,7 +1,7 @@
 import express from 'express';
 import stoppable from 'stoppable';
-import config  from './config';
-import { getLogger }from './logger';
+import config from './config';
+import { getLogger } from './logger';
 
 import { getContext, Context } from './context.js';
 
@@ -39,7 +39,11 @@ function startServer(context: Context) {
   });
 
   const nodeApp = stoppable(
-    app.listen(port, () => context.logger.info(`${context.config.appName} ${context.config.appVersion} is listening on port ${port}`)),
+    app.listen(port, () =>
+      context.logger.info(
+        `${context.config.appName} ${context.config.appVersion} is listening on port ${port}.`,
+      ),
+    ),
   );
 
   nodeApp.timeout = 0;
@@ -58,7 +62,7 @@ function startServer(context: Context) {
     });
   });
 
-  process.on('uncaughtException', error => {
+  process.on('uncaughtException', (error) => {
     console.log(`uncaughtException: ${error.message}`, {
       stack: error.stack,
       error: JSON.stringify(error),
@@ -68,7 +72,7 @@ function startServer(context: Context) {
 
 getContext(config, logger)
   .then(startServer)
-  .catch((error: { stack: string; }) => {
+  .catch((error: { stack: string }) => {
     logger.info(`Failed to start ${config.appName}: ${error.stack}`);
     process.exit(1);
   });

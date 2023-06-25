@@ -66,6 +66,7 @@ export function getLogger(config: IConfig): ILogger {
     verbose: (message: string, meta?: object | unknown) => winstonLogger.verbose(message, meta),
     debug: (message: string, meta?: object | unknown) => winstonLogger.debug(message, meta),
     silly: (message: string, meta?: object | unknown) => winstonLogger.silly(message, meta),
-    log: (level: LogLevel, message: string, meta?: object | unknown) => winstonLogger.log(level, message, meta),
+    log: (level: LogLevel, message: string, meta?: object | unknown) =>
+      winstonLogger.log(level, message, meta),
   };
 }

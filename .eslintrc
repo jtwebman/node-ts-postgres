@@ -1,0 +1,29 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "extends": ["eslint:recommended", "prettier"],
+  "overrides": [
+    // Typescript files
+    {
+      "files": ["*.ts"],
+      "excludedFiles": ["config/*.js"],
+      "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module"
+      },
+      "plugins": ["@typescript-eslint/recommended"],
+      "rules": {},
+      "env": {
+        "node": true,
+        "es2021": true
+      }
+    },
+    // config files
+    {
+      "files": ["config/*.js"],
+      "env": {
+        "node": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: postgres
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready', '-d', 'postgres']
+      interval: 10s
+      timeout: 10s
+      retries: 40
+    ports:
+      - 5432:5432
+    tty: true
+    tmpfs:
+      - /var/lib/postgresql/data
+  db-migrations:
+    build:
+      context: .
+    volumes:
+      - ./:/usr/src/app
+    command: node /usr/src/app/dist/dbMigrations.js
+    environment:
+      NODE_ENV: production
+    depends_on:
+      db:
+        condition: service_healthy
+  api:
+    build:
+      context: .
+      target: dev
+    volumes:
+      - ./:/usr/src/app
+    command: npm run dev
+    depends_on:
+      db-migrations:
+        condition: service_completed_successfully
