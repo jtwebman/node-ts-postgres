@@ -43,6 +43,8 @@ export async function runMigrations(
     if (!(await migrations.databaseExists(migrationAdminDB, pgConfig.database))) {
       logger.info(`Creating db ${pgConfig.database}.`);
       await migrations.createDatabase(migrationAdminDB, pgConfig.database);
+    } else {
+      logger.info(`Db ${pgConfig.database} exists.`);
     }
 
     migrationAdminDB.$pool.end();

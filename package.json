@@ -4,9 +4,9 @@
   "description": "A simple Node.js Typescript service with Postgres, proper validation, tests, and seperation of concerns",
   "main": "dist/server.js",
   "scripts": {
-    "build": "npx tsc",
-    "start": "node dist/server.js",
-    "dev": "concurrently \"npx tsc --watch\" \"nodemon -q dist/server.js\""
+    "build": "npx tsc && copyfiles -u 3 ./src/data/sql/**/*.sql ./dist/data/sql",
+    "start": "npm run build && node dist/server.js",
+    "dev": "nodemon --exec npm run start"
   },
   "author": "JT Turner <jtwebman@gmail.com> (https://jtwebman.com/)",
   "license": "MIT",
@@ -20,6 +20,7 @@
     "@typescript-eslint/eslint-plugin": "5.60.0",
     "@typescript-eslint/parser": "5.60.0",
     "concurrently": "8.2.0",
+    "copyfiles": "^2.4.1",
     "eslint": "8.43.0",
     "eslint-config-prettier": "^8.8.0",
     "nodemon": "2.0.22",
