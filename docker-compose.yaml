@@ -33,6 +33,10 @@ services:
     volumes:
       - ./:/usr/src/app
     command: npm run dev
+    environment:
+      NODE_ENV: production
+    ports:
+      - 4000:4000
     depends_on:
       db-migrations:
         condition: service_completed_successfully

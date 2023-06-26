@@ -28,6 +28,17 @@ export interface IConfig {
   pgConnection: string;
   /** Postgres connection pool size */
   pgPoolSize: number;
+  /** Health Check settings */
+  healthCheck: {
+    /** The max event loop delay in ms to start failing at */
+    maxEventLoopDelay: number;
+    /** The max heap stack size in bytes to start failing at */
+    maxHeapUsedBytes: number;
+    /** On each req log stats to track event loop and heap size */
+    logStatsOnReq: boolean;
+    /** The max PG pool connections waiting to start failing at */
+    maxPGWaitCount: number;
+  };
 }
 
 const config: IConfig = {
@@ -42,6 +53,12 @@ const config: IConfig = {
   pgMigrationConnection: nodeConfig.get<string>('pgMigrationConnection'),
   pgConnection: nodeConfig.get<string>('pgConnection'),
   pgPoolSize: nodeConfig.get<number>('pgPoolSize'),
+  healthCheck: {
+    maxEventLoopDelay: nodeConfig.get<number>('healthCheck.maxEventLoopDelay'),
+    maxHeapUsedBytes: nodeConfig.get<number>('healthCheck.maxHeapUsedBytes'),
+    logStatsOnReq: nodeConfig.get<boolean>('healthCheck.logStatsOnReq'),
+    maxPGWaitCount: nodeConfig.get<number>('healthCheck.maxPGWaitCount'),
+  },
 };
 
 export default config;

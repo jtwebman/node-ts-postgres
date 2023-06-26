@@ -2,8 +2,8 @@ import express from 'express';
 import stoppable from 'stoppable';
 import config from './config';
 import { getLogger } from './logger';
-
-import { getContext, Context } from './context.js';
+import { getContext, IContext } from './context.js';
+import { getApp } from './routers/app';
 
 const logger = getLogger(config);
 
@@ -23,7 +23,7 @@ const killSignals: KillSignals = {
   SIGTERM: 15,
 };
 
-function shutdown(app: stoppable.StoppableServer, context: Context, signal: keyof KillSignals) {
+function shutdown(app: stoppable.StoppableServer, context: IContext, signal: keyof KillSignals) {
   context.logger.info(`Trying shutdown, got signal ${signal}`);
   app.stop(() => {
     context.logger.info('Node app stopped.');
@@ -31,13 +31,8 @@ function shutdown(app: stoppable.StoppableServer, context: Context, signal: keyo
   });
 }
 
-function startServer(context: Context) {
-  const app = express();
-
-  app.get('/', (req, res) => {
-    res.send(`Express + TypeScript Server from ${config.appName} version ${config.appVersion}`);
-  });
-
+function startServer(context: IContext) {
+  const app = getApp(context);
   const nodeApp = stoppable(
     app.listen(port, () =>
       context.logger.info(
